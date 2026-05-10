@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -15,24 +16,25 @@ func TestCleanInput(t *testing.T) {
 		},
 		{
 			input:    "Charmander Bulbasaur PIKACHU",
-			expected: []string("charmander", "bulbasaur", "pikachu"),
+			expected: []string{"charmander", "bulbasaur", "pikachu"},
 		},
 		{
 			input:    "Zubat ZUbAt ZuBaT",
-			expected: []string("zubat", "zubat", "zubat"),
+			expected: []string{"zubat", "zubat", "zubat"},
 		},
 	}
 
 	for _, c := range cases {
 		actual := CleanInput(c.input)
+		fmt.Println((actual))
 		if len(actual) != len(c.expected) {
-			return t.Errorf("ERROR: expected and result lengths do not match")
+			t.Errorf("ERROR: expected and result lengths do not match")
 		}
-		for _, i := range actual {
+		for i := range actual {
 			word := actual[i]
 			expectedWord := c.expected[i]
 			if word != expectedWord {
-				return t.Errorf("ERROR: expected and actual word mismatch")
+				t.Errorf("ERROR: expected and actual word mismatch")
 			}
 		}
 	}
