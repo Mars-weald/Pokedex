@@ -15,6 +15,16 @@ func main() {
 		input := scanner.Text()
 		cleanedInput := strings.ToLower(input)
 		words := strings.Split(cleanedInput, " ")
-		fmt.Printf("Your command was: %s \n", words[0])
+		command := words[0]
+
+		_, exists := reg[command]
+		if exists {
+			err := reg[command].callback()
+			if err != nil {
+				fmt.Printf("%v", err)
+			}
+		} else {
+			fmt.Println("Unknown command")
+		}
 	}
 }
