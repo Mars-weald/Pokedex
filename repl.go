@@ -25,7 +25,7 @@ func init() {
 
 		"mapf": {
 			name:     "mapf",
-			desc:     "Displays next page of location areas",
+			desc:     "Displays the next page of location areas",
 			callback: commandMapf,
 		},
 		"mapb": {

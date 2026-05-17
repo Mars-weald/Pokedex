@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	pokeapi "github.com/Mars-weald/Pokedex/internal/pokeAPI"
 )
 
 type commandCLI struct {
@@ -26,10 +28,32 @@ func commandHelp(c *config) error {
 }
 
 func commandMapf(c *config) error {
-	areaLocations := pokemap(c.baseURL)
+	areaLocations, err := pokeapi.Pokemap(c.nextURL)
+	if err != nil {
+		return fmt.Errorf("ERROR getting locations. Check subfile: %w", err)
+	}
+
+	c.nextURL = areaLocations.Next
+	c.prevURL = *areaLocations.Previous
+
+	for _, area := range areaLocations.Results {
+		fmt.Println(area.Name)
+	}
 	return nil
 }
 
 func commandMapb(c *config) error {
+	if c.prevURL == "" {
+		fmt.Println("You're on the first page.")
+	}
+
+	areaLocations, err := pokeapi.Pokemap(c.prevURL)
+	if err != nil {
+		return fmt.Errorf("ERROR getting locations. Check subfile: %w", err)
+	}
+
+	for _, area := range areaLocations.Results {
+		fmt.Println(area.Name)
+	}
 	return nil
 }
