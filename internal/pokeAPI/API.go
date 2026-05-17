@@ -19,10 +19,10 @@ type locationList struct {
 	} `json:"results"`
 }
 
-func Pokemap(pageURL string) (locationList, error) {
-	url := pageURL
-	if url == "" {
-		url = bassURL + "/location-area"
+func Pokemap(pageURL *string) (locationList, error) {
+	url := bassURL + "/location-area"
+	if pageURL != nil {
+		url = *pageURL
 	}
 
 	listOLocations := locationList{}
