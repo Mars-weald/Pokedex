@@ -21,8 +21,8 @@ type locationList struct {
 
 func Pokemap(pageURL string) (locationList, error) {
 	url := pageURL
-	if pageURL == bassURL {
-		url = bassURL + "/location-area"
+	if pageURL == "" {
+		pageURL = bassURL + "/location-area"
 	}
 
 	listOLocations := locationList{}
