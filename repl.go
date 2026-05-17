@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"strings"
@@ -21,6 +22,45 @@ func init() {
 			desc:     "Displays help message",
 			callback: commandHelp,
 		},
+
+		"mapf": {
+			name:     "mapf",
+			desc:     "Displays next page of location areas",
+			callback: commandMapf,
+		},
+		"mapb": {
+			name:     "mapb",
+			desc:     "Displays the previous page of location areas",
+			callback: commandMapb,
+		},
+	}
+}
+
+type config struct {
+	baseURL string
+	nextURL string
+	prevURL string
+}
+
+func startoop(conf *config) {
+	scanner := bufio.NewScanner(os.Stdin)
+	for i := 0; ; i++ {
+		fmt.Print("Pokedex > ")
+		scanner.Scan()
+		input := scanner.Text()
+		cleanedInput := strings.ToLower(input)
+		words := strings.Split(cleanedInput, " ")
+		command := words[0]
+
+		_, exists := reg[command]
+		if exists {
+			err := reg[command].callback(conf)
+			if err != nil {
+				fmt.Printf("%v", err)
+			}
+		} else {
+			fmt.Println("Unknown command")
+		}
 	}
 }
 
@@ -34,25 +74,4 @@ func CleanInput(text string) []string {
 		cleanedString = append(cleanedString, strings.ToLower(cleaved[i]))
 	}
 	return cleanedString
-}
-
-type commandCLI struct {
-	name     string
-	desc     string
-	callback func() error
-}
-
-func commandExit() error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func commandHelp() error {
-
-	fmt.Print("Welcome to the Pokedex!\nUsage: \n\n")
-	for _, key := range reg {
-		fmt.Printf("%s: %s\n", key.name, key.desc)
-	}
-	return nil
 }
