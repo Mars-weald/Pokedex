@@ -34,7 +34,7 @@ func commandMapf(c *config) error {
 	}
 
 	c.nextURL = areaLocations.Next
-	c.prevURL = *areaLocations.Previous
+	c.prevURL = areaLocations.Previous
 
 	for _, area := range areaLocations.Results {
 		fmt.Println(area.Name)
@@ -43,8 +43,8 @@ func commandMapf(c *config) error {
 }
 
 func commandMapb(c *config) error {
-	if c.prevURL == "" {
-		fmt.Println("You're on the first page.")
+	if c.prevURL == nil {
+		return fmt.Errorf("You're on the first page\n")
 	}
 
 	areaLocations, err := pokeapi.Pokemap(c.prevURL)

@@ -23,8 +23,8 @@ func init() {
 			callback: commandHelp,
 		},
 
-		"mapf": {
-			name:     "mapf",
+		"map": {
+			name:     "map",
 			desc:     "Displays the next page of location areas",
 			callback: commandMapf,
 		},
@@ -38,8 +38,8 @@ func init() {
 
 type config struct {
 	baseURL string
-	nextURL string
-	prevURL string
+	nextURL *string
+	prevURL *string
 }
 
 func startoop(conf *config) {

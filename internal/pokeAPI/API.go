@@ -11,7 +11,7 @@ const bassURL = "https://pokeapi.co/api/v2/"
 
 type locationList struct {
 	Count    int     `json:"count"`
-	Next     string  `json:"next"`
+	Next     *string `json:"next"`
 	Previous *string `json:"previous"`
 	Results  []struct {
 		Name string `json:"name"`
