@@ -53,6 +53,7 @@ func (C Cache) reapLoop(interval time.Duration) {
 	defer C.mu.Unlock()
 
 	tick := time.NewTicker(interval)
+	defer tick.Stop()
 	for range tick.C {
 		for key := range C.cacheMap {
 			targetTime := time.Now().Add(interval * -1)
